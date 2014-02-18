@@ -12,6 +12,7 @@ def dispatch(source, event_type, timestamp, value, private_detail, host):
 
 
     all_hosts = EventBucket.ALL_HOST_BUCKET
+    timestamp = timestamp.replace(microsecond=0)
     minute_start = timestamp.replace(second=0)
     hour_start = timestamp.replace(second=0, minute=0)
     day_start = timestamp.replace(second=0, minute=0, hour=0)
@@ -83,7 +84,7 @@ def dispatch(source, event_type, timestamp, value, private_detail, host):
             else:
                 filtered = filter1
 
-            bucket.value = filtered.aggregate(Count('value', distinct=True))
+            bucket.unique_values = filtered.aggregate(Count('value', distinct=True))["value__count"]
 
         bucket.save()
 

@@ -20,32 +20,32 @@ def dispatch(source, event_type, timestamp, value, private_detail, host):
     buckets.append(EventBucket.objects.get_or_create(source=source,
                             host=host, event_type=event_type,
                             bucket_type=EventBucket.MINUTE,
-                            start_time=minute_start))
+                            start_time=minute_start)[0])
 
     buckets.append(EventBucket.objects.get_or_create(source=source,
                             host=all_hosts, event_type=event_type,
                             bucket_type=EventBucket.MINUTE,
-                            start_time=minute_start))
+                            start_time=minute_start)[0])
 
     buckets.append(EventBucket.objects.get_or_create(source=source,
                             host=host, event_type=event_type,
-                            bucket_type=EventBucket.hour,
-                            start_time=hour_start))
+                            bucket_type=EventBucket.HOUR,
+                            start_time=hour_start)[0])
 
     buckets.append(EventBucket.objects.get_or_create(source=source,
                             host=all_hosts, event_type=event_type,
-                            bucket_type=EventBucket.hour,
-                            start_time=hour_start))
+                            bucket_type=EventBucket.HOUR,
+                            start_time=hour_start)[0])
 
     buckets.append(EventBucket.objects.get_or_create(source=source,
                             host=host, event_type=event_type,
-                            bucket_type=EventBucket.day,
-                            start_time=day_start))
+                            bucket_type=EventBucket.DAY,
+                            start_time=day_start)[0])
 
     buckets.append(EventBucket.objects.get_or_create(source=source,
                             host=all_hosts, event_type=event_type,
-                            bucket_type=EventBucket.day,
-                            start_time=day_start))
+                            bucket_type=EventBucket.DAY,
+                            start_time=day_start)[0])
 
     for bucket in buckets:
         # I'd like this to be replaced with something like
@@ -74,8 +74,8 @@ def dispatch(source, event_type, timestamp, value, private_detail, host):
             # XXX - is there a more efficient way to get this?
             filter1 = RawEvent.objects.filter(source=bucket.source,
                                     event_type = bucket.event_type,
-                                    timestamp >= start_time,
-                                    timestamp < end_time)
+                                    timestamp__gte = start_time,
+                                    timestamp__lt = end_time)
 
             if EventBucket.ALL_HOST_BUCKET != bucket.host:
                 filtered = filter1.filter(host = bucket.host)

@@ -41,16 +41,16 @@ class EventBucket(models.Model):
     start_time = models.DateTimeField(db_index=True)
 
     # For pass/fail and interval, to get averages
-    total_count = models.IntegerField()
+    total_count = models.IntegerField(default=0)
 
     # For pass/fail events:
-    total_pass = models.IntegerField()
+    total_pass = models.IntegerField(default=0)
 
     # For interval events:
-    total_time = models.FloatField()
+    total_time = models.FloatField(default=0.0)
 
     # For text events:
-    unique_values = models.IntegerField()
+    unique_values = models.IntegerField(default=0)
 
 
     class Meta:

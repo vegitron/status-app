@@ -55,3 +55,22 @@ class EventBucket(models.Model):
 
     class Meta:
         unique_together = ('source', 'host', 'event_type', 'bucket_type', 'start_time')
+
+
+    def display_count(self):
+        if RawEvent.PASS_FAIL == self.event_type:
+            if 0 == self.total_count:
+                return 0
+            return 100 * self.total_pass / self.total_count
+
+        if RawEvent.INTERVAL == self.event_type:
+            if 0 == self.total_count:
+                return 0
+
+            return self.total_time / self.total_count
+
+        if RawEvent.TEXT == self.event_type:
+            return self.unique_values
+
+
+

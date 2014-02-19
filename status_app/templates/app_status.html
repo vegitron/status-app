@@ -8,6 +8,16 @@
 {% for source in data %}
     <div style="float: left;">
     {{ source.name }}:
+    <br />
+    {% if source.pass_fail %}
+    Percent failure
+    {% endif %}
+    {% if source.interval %}
+    Average time
+    {% endif %}
+    {% if source.text %}
+    Unique values
+    {% endif %}
     </div>
     <div style="float: left;">
     <canvas id="chart_{{source.name}}" width="600" height="200"></canvas>
@@ -23,7 +33,8 @@
             ]
         },
         {
-            pointDot : false,
+            pointDot : true,
+            pointDotRadius : .5,
             animation: false
         }
         );

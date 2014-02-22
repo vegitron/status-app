@@ -1,6 +1,5 @@
 from datetime import datetime
 from status_app.signals import request_signal
-import status_app.receivers
 
 class TimingMiddleware(object):
     _process_data = {}

@@ -1,1 +1,3 @@
-import status_app.receiver_initialization
+from status_app.receiver_initialization import load_receivers
+
+load_receivers()

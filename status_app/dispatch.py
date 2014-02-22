@@ -9,7 +9,7 @@ from django.conf import settings
 loaded_dispatchers = {}
 
 def dispatch(source, event_type, timestamp, value, private_detail, host):
-    dispatch_modules = getattr(settings, 'STATUS_APP_DISPATCHERS', [ 'status_app.dispatcher.model.dispatch' ])
+    dispatch_modules = getattr(settings, 'STATUS_APP_DISPATCHERS', [ 'status_app.dispatcher.memory.dispatch' ])
 
     for module in list(set(dispatch_modules)):
         if not module in loaded_dispatchers:

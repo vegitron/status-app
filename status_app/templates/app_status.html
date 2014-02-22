@@ -24,6 +24,7 @@
 
     <script>
     (function() {
+        // {{ source.pass_fail }}, {{ source.interval }}
         var ctx = document.getElementById("chart_{{source.name}}").getContext("2d");
         var myNewChart = new Chart(ctx).Line({
             labels: [{% for minute in source.minutes %}''{% if not forloop.last %},{% endif %}{% endfor %}],
@@ -33,6 +34,12 @@
             ]
         },
         {
+            {% if source.pass_fail %}
+            scaleStartValue: 0.0,
+            scaleOverride: true,
+            {% endif %}
+            scaleSteps: 10,
+            scaleStepWidth: 10,
             pointDot : true,
             pointDotRadius : .5,
             animation: false

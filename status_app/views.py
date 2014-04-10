@@ -1,4 +1,5 @@
 from django.shortcuts import render_to_response
+from django.template import RequestContext
 from django.utils import timezone
 from django import template
 from datetime import datetime, timedelta
@@ -20,6 +21,5 @@ def status(request):
         # template
         pass
 
-
-    return render_to_response("app_status.html", context)
+    return render_to_response("app_status.html", context, context_instance=RequestContext(request))
 
